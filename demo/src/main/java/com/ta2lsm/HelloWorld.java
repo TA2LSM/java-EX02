@@ -300,7 +300,7 @@ public final class HelloWorld {
         // keyboardInput.close();
         //------------------------------------------------------
 
-        //--- 1.2. BOLUM PROJESI -------------------------------
+        //--- 1.2. BOLUM PROJESI ------------------------------- (hatalı veri girişlerini tespit etmeyen kod)
         final byte MONTHS_IN_YEAR = 12;
         final byte PERCENT_DIVIDER = 100;
 
