@@ -182,7 +182,7 @@ public final class HelloWorld {
         // // PI = 1; dersek derleme hatası alırız.
         // // Ayrıca final değişkenlerin tüm harfleri büyük yazılır.
 
-        // Scanner keyboardInput = new Scanner(System.in); // klavyeden veri girişi tanımlaması
+        // Scanner keyboardInput = new Scanner(System.in); // klavyeden veri girişi tanımlaması, out olsaydı terminale basacaktı
         // System.out.println("Yaricapi giriniz: ");
         // float radius = keyboardInput.nextFloat();       // 2,5 olarak virgülle giriş yapılması lazım
         // System.out.printf("Yaricap degeri: %.2f birim girildi.%n", radius);
@@ -283,6 +283,54 @@ public final class HelloWorld {
         // System.out.println(result2);
         // System.out.println(NumberFormat.getPercentInstance().format(0.1));  
         // // direkt bu şekilde de olur: %10 Buna method chaining deniyor...
+        //------------------------------------------------------
+
+        //--- KLAVYEDEN VERI GIRISI ----------------------------
+        // Scanner keyboardInput = new Scanner(System.in);
+        // System.out.print("Enter your age: ");
+        // byte age = keyboardInput.nextByte();
+        // System.out.println("Hmm... You are " + age);    // byte olan age burada string'e otomatik çevriliyor
+        // keyboardInput.close();
+
+        // Scanner keyboardInput = new Scanner(System.in);
+        // System.out.print("Enter your name: ");
+        // //String name = keyboardInput.next();           // boşluk görene kadar girişi alır tüm isim için 2 kere bu işlem çağrılmalı
+        // String name = keyboardInput.nextLine().trim();  // enter gelene kadar girişi alır. Olası boşlukları da temizledik
+        // System.out.println("Nice to meet you " + name); // byte olan age burada string'e otomatik çevriliyor
+        // keyboardInput.close();
+        //------------------------------------------------------
+
+        //--- 1.2. BOLUM PROJESI -------------------------------
+        final byte MONTHS_IN_YEAR = 12;
+        final byte PERCENT_DIVIDER = 100;
+
+        Scanner keyboardInput = new Scanner(System.in);
+
+        System.out.print("Principal: ");                // yıllık kazanç (100000)
+        int principal = keyboardInput.nextInt();
+
+        System.out.print("Annual Interest Rate: ");     // kredi faizi (3.92)
+        float rate = keyboardInput.nextFloat() / ((float)MONTHS_IN_YEAR * (float)PERCENT_DIVIDER);
+
+        System.out.print("Period (Years): ");           // kredi geri ödeme süresi (30 yıl ama ay olarak kullanılacak)
+        int months = keyboardInput.nextInt() * MONTHS_IN_YEAR;
+
+        keyboardInput.close();
+
+        /**
+         * mortgage = principal * ( (rate x (1 + rate)^n) /  (1 + rate)^n - 1)
+         * months: number of payments (Period * 12)
+         * rate: Annual Interest Rate / (12 * 100)
+         */
+
+        NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
+        // aylık ödemeler (mortgage)
+        double mortgage = rate * (Math.pow((1 + rate), months));
+        mortgage /= ( Math.pow((1 + rate), months) - 1.0F );
+        mortgage *= principal;
+
+        //System.out.println(mortgage);
+        System.out.printf("Mortgage: %s", currency.format(mortgage));
         //------------------------------------------------------
     }
 
