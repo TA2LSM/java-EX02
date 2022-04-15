@@ -310,7 +310,9 @@ public final class HelloWorld {
         int principal = keyboardInput.nextInt();
 
         System.out.print("Annual Interest Rate: ");     // kredi faizi (3.92)
-        float rate = keyboardInput.nextFloat() / ((float)MONTHS_IN_YEAR * (float)PERCENT_DIVIDER);
+        float rate = keyboardInput.nextFloat() / ((float)MONTHS_IN_YEAR * (float)PERCENT_DIVIDER);  // monthly interest
+        // Kursta bu kısmı aşağıdaki gibi yazmış:
+        // float rate = keyboardInput.nextFloat() / PERCENT_DIVIDER / MONTHS_IN_YEAR;
 
         System.out.print("Period (Years): ");           // kredi geri ödeme süresi (30 yıl ama ay olarak kullanılacak)
         int months = keyboardInput.nextInt() * MONTHS_IN_YEAR;
@@ -323,13 +325,18 @@ public final class HelloWorld {
          * rate: Annual Interest Rate / (12 * 100)
          */
 
-        NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
-        // aylık ödemeler (mortgage)
+        // aylık ödemelerin hesaplanması (mortgage)
+
+        // kursta aşağıdaki gibi yazıldı:
+        // double mortgage = principal 
+        //             * ( rate * (Math.pow((1 + rate), months)) )
+        //             / ( Math.pow((1 + rate), months) - 1.0F );
+              
         double mortgage = rate * (Math.pow((1 + rate), months));
         mortgage /= ( Math.pow((1 + rate), months) - 1.0F );
         mortgage *= principal;
 
-        //System.out.println(mortgage);
+        NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
         System.out.printf("Mortgage: %s", currency.format(mortgage));
         //------------------------------------------------------
     }
